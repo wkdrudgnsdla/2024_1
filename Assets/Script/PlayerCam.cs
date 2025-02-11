@@ -6,8 +6,8 @@ public class PlayerCam : MonoBehaviour
     public float rotationSpeed { get; set; } = 20f;
 
     [SerializeField] private Transform target;
-    [SerializeField] private float distance = 10f;
-    [SerializeField] private float height = 3f;
+private float distance = 10f;
+private float height = 3f;
 
     private void Awake()
     {
@@ -17,8 +17,8 @@ public class PlayerCam : MonoBehaviour
 
     private void Start()
     {
-        followSpeed = 3;
-        rotationSpeed = 4;
+        followSpeed = 0.2f;
+        rotationSpeed = 1;
     }
 
     private void LateUpdate()

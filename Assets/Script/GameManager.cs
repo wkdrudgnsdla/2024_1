@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
 {
     PlayerCam cam;
     PlayerMove player;
+    MultiTerrainChecker MTC;
 
     public float sec;
 
@@ -15,16 +16,19 @@ public class GameManager : MonoBehaviour
     public float StartCountdown;
 
     public bool startRace;
+    public bool OutTrack;
 
     public void Awake()
     {
         cam = GameObject.Find("PlayerCam").GetComponent<PlayerCam>();
         player = GameObject.Find("Player").GetComponent<PlayerMove>();
+        MTC = player.GetComponent<MultiTerrainChecker>();
     }
 
     public void Start()
     {
         StartCountdown = 4;
+        OutTrack = false;
     }
 
     public void Update()
@@ -34,6 +38,15 @@ public class GameManager : MonoBehaviour
         if(StartCountdown <= 0)
         {
             startRace = true;
+        }
+
+        if(MTC.layerIndex == 1 || MTC.layerIndex == 3)
+        {
+            OutTrack = false;
+        }
+        else
+        {
+            OutTrack = true;
         }
 
         if(startRace)
