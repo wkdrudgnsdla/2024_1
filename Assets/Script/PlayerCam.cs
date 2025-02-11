@@ -2,16 +2,23 @@ using UnityEngine;
 
 public class PlayerCam : MonoBehaviour
 {
+    public float followSpeed { get; set; } = 20f;
+    public float rotationSpeed { get; set; } = 20f;
+
     [SerializeField] private Transform target;
     [SerializeField] private float distance = 10f;
     [SerializeField] private float height = 3f;
-    [SerializeField] private float followSpeed = 20f;
-    [SerializeField] private float rotationSpeed = 20f;
 
     private void Awake()
     {
         if (target == null)
             target = GameObject.Find("Player").transform;
+    }
+
+    private void Start()
+    {
+        followSpeed = 3;
+        rotationSpeed = 4;
     }
 
     private void LateUpdate()
