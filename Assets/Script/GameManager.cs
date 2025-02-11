@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour
 
         if (SCount >= 60)
         {
+            sec = 0;
             SCount = 0;
             MCount += 1;
         }
