@@ -40,7 +40,7 @@ public class GameManager : MonoBehaviour
     {
         StartCountdown -= Time.deltaTime;
 
-        if(StartCountdown <= 0 && !Finish)
+        if(StartCountdown <= 1 && !Finish)
         {
             startRace = true;
         }
