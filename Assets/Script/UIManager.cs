@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,6 +13,7 @@ public class UIManager : MonoBehaviour
     public Text time;
     public Text CountText;
     public Text SpeedText;
+    public Text Cheat;
 
     public void Awake()
     {
@@ -19,6 +21,7 @@ public class UIManager : MonoBehaviour
         time = GameObject.Find("time").GetComponent<Text>();
         CountText = GameObject.Find("CountText").GetComponent<Text>();
         SpeedText = GameObject.Find("SpeedText").GetComponent <Text>();
+        Cheat = GameObject.Find("CheatText").GetComponent<Text>();
 
         GM = GameObject.Find("GameManager").GetComponent<GameManager>();
         player = GameObject.Find("Player").GetComponent<PlayerMove>();
@@ -31,20 +34,32 @@ public class UIManager : MonoBehaviour
 
         int count = (int)GM.StartCountdown;
 
-        if(count > 0)
+        if (count > 0)
         {
             CountText.text = count.ToString();
         }
-        else if(count == 0)
+        else if (count == 0)
         {
             CountText.text = "GO!";
         }
-        else if(count <= -1)
+        else if (count <= -1)
         {
             CountText.text = " ";
         }
 
+        if (Input.GetKeyUp(KeyCode.F3))
+        {
+            StartCoroutine(F3());
+        }
+
         int speed = (int)player.currentSpeed * 3;
         SpeedText.text = speed.ToString() + "km/h";
+    }
+
+    IEnumerator F3()
+    {
+        Cheat.text = "F3: 레이스 재시작";
+        yield return new WaitForSeconds(1.2f);
+        Cheat.text = " ";
     }
 }
