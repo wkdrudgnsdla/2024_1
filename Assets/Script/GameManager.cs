@@ -8,7 +8,7 @@ public class GameManager : MonoBehaviour
 {
     PlayerCam cam;
     Camera PCam;
-    PlayerMove player;
+    public PlayerMove player;
     MultiTerrainChecker MTC;
 
     public float sec { get;set;}
@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviour
 
     public bool startRace;
     public bool OutTrack;
+    public bool Finish;
 
     public void Awake()
     {
@@ -32,13 +33,14 @@ public class GameManager : MonoBehaviour
     {
         StartCountdown = 4;
         OutTrack = false;
+        Finish = false;
     }
 
     public void Update()
     {
         StartCountdown -= Time.deltaTime;
 
-        if(StartCountdown <= 0)
+        if(StartCountdown <= 0 && !Finish)
         {
             startRace = true;
         }
@@ -103,6 +105,7 @@ public class GameManager : MonoBehaviour
         startRace = false;
         StartCountdown = 4;
         OutTrack = false;
+        Finish = false;
 
         player.moveSpeed = 10f;
         player.turnSpeed = 1f;
