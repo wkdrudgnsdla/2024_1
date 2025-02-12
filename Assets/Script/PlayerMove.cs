@@ -1,18 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerMove : MonoBehaviour
 {
-    public float moveSpeed = 6f;
-    public float turnSpeed = 2f;
+    public float moveSpeed = 10f;
+    public float turnSpeed = 1f;
     public float brakeForce = 10f;
-    public float turnDamping = 5f;
-    public float extraGravity = 20f;
+    public float turnDamping = 1f;
+    public float extraGravity = 5f;
     public float currentSpeed;
 
     public bool moveable;
-    private Rigidbody rb;
+    public Rigidbody rb;
 
     void Awake()
     {
@@ -25,6 +26,30 @@ public class PlayerMove : MonoBehaviour
     private void Start()
     {
         moveable = false;
+    }
+
+    private void Update()
+    {
+        if(Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.D))
+        {
+            turnSpeed = 0;
+        }
+        else if(Input.GetKey(KeyCode.RightArrow) && Input.GetKey(KeyCode.LeftArrow))
+        {
+            turnSpeed = 0;
+        }
+        else if(Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.RightArrow))
+        {
+            turnSpeed = 0;
+        }
+        else if(Input.GetKey(KeyCode.D) && Input.GetKey(KeyCode.LeftArrow))
+        {
+            turnSpeed = 0;
+        }
+        else
+        {
+            turnSpeed = 1;
+        }
     }
 
     void FixedUpdate()
@@ -58,5 +83,6 @@ public class PlayerMove : MonoBehaviour
             rb.AddForce(Vector3.down * extraGravity, ForceMode.Acceleration);
 
             currentSpeed = rb.velocity.magnitude;
-        }    }
+        }
+    }
 }
