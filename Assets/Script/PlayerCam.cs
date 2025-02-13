@@ -9,8 +9,11 @@ public class PlayerCam : MonoBehaviour
 private float distance = 10f;
 private float height = 3f;
 
+    GameManager GM;
+
     private void Awake()
     {
+        GM = GameObject.Find("GameManager").GetComponent<GameManager>();
         if (target == null)
             target = GameObject.Find("Player").transform;
     }
@@ -23,10 +26,17 @@ private float height = 3f;
 
     private void LateUpdate()
     {
-        Vector3 desiredPosition = target.position - target.right * distance + Vector3.up * height;
-        transform.position = Vector3.Lerp(transform.position, desiredPosition, followSpeed * Time.smoothDeltaTime);
-        Vector3 lookAtPos = target.position + Vector3.up * height;
-        Quaternion desiredRotation = Quaternion.LookRotation(lookAtPos - transform.position);
-        transform.rotation = Quaternion.Slerp(transform.rotation, desiredRotation, rotationSpeed * Time.smoothDeltaTime);
+        if (GM.isMainMenu == false)
+        {
+            Vector3 desiredPosition = target.position - target.right * distance + Vector3.up * height;
+            transform.position = Vector3.Lerp(transform.position, desiredPosition, followSpeed * Time.smoothDeltaTime);
+            Vector3 lookAtPos = target.position + Vector3.up * height;
+            Quaternion desiredRotation = Quaternion.LookRotation(lookAtPos - transform.position);
+            transform.rotation = Quaternion.Slerp(transform.rotation, desiredRotation, rotationSpeed * Time.smoothDeltaTime);
+        }
+        else
+        {
+            return;
+        }
     }
 }

@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class PlayerMove : MonoBehaviour
 {
+    GameManager GM;
+
     public float moveSpeed = 10f;
     public float turnSpeed = 1f;
     public float brakeForce = 10f;

@@ -15,7 +15,7 @@ public class FinishLine : MonoBehaviour
     {
         GM.Finish = true;
         GM.startRace = false;
-        GM.player.rb.velocity = Vector3.Lerp(GM.player.rb.velocity, Vector3.zero, Time.deltaTime * 30);
-        GM.player.rb.angularVelocity = Vector3.Lerp(GM.player.rb.angularVelocity, Vector3.zero, Time.deltaTime * 30);
+        GM.player.rb.velocity = Vector3.Lerp(GM.player.rb.velocity, Vector3.zero, Time.deltaTime * 40);
+        GM.player.rb.angularVelocity = Vector3.Lerp(GM.player.rb.angularVelocity, Vector3.zero, Time.deltaTime * 40);
     }
 }
