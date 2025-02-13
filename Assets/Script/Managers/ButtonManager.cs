@@ -42,6 +42,11 @@ public class ButtonManager : MonoBehaviour
 
     }
 
+    public void OnClickUpgradeButton()
+    {
+
+    }
+
     public void OnClickHelpButton()
     {
 
