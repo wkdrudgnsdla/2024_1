@@ -16,6 +16,7 @@ public class ButtonManager : MonoBehaviour
 
     public GameObject MenuObejct;
     public GameObject MainMenu;
+    public GameObject Help;
 
 
     public void Awake()
@@ -30,6 +31,7 @@ public class ButtonManager : MonoBehaviour
 
         MenuObejct = GameObject.Find("MenuObejct");
         MainMenu = GameObject.Find("MainMenu");
+        Help = GameObject.Find("Help");
     }
 
     public void OnClickStartButton()
@@ -44,7 +46,7 @@ public class ButtonManager : MonoBehaviour
 
     public void OnClickHelpButton()
     {
-
+        Help.SetActive(true);
     } 
 
     public void OnClickQuitButton()
