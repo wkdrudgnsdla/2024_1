@@ -25,6 +25,8 @@ public class GameManager : MonoBehaviour
     public bool inStage;
     public bool isMainMenu;
 
+    public float cash;
+
     public void Awake()
     {
         cam = GameObject.Find("PlayerCam").GetComponent<PlayerCam>();
@@ -42,6 +44,7 @@ public class GameManager : MonoBehaviour
         Finish = false;
         inStage = false;
         isMainMenu = true;
+        cash = 0;
     }
 
     public void Update()
@@ -133,6 +136,7 @@ public class GameManager : MonoBehaviour
         sec = 0;
         MCount = 0;
         SCount = 0;
+        cash = 0;
 
         startRace = false;
         StartCountdown = 4;

@@ -34,7 +34,7 @@ public class HelpUI : MonoBehaviour
 
     public void Awake()
     {
-        HelpText = GameObject.Find("HelpText").GetComponent<Text>();
+        //HelpText = GameObject.Find("HelpText").GetComponent<Text>();
         NextPageButton = GameObject.Find("NextPageButton").GetComponent<Button>();
         BeforePageButton = GameObject.Find("BeforePageButton").GetComponent <Button>();
         HelpTitle = GameObject.Find("HelpTitle").GetComponent<Text>();
@@ -66,7 +66,7 @@ public class HelpUI : MonoBehaviour
         else if(pagenum == 3)
         {
             HelpTitle.text = "아이템 및 부품";
-            HelpText.text = "아이템 종류\r\n- 100, 500, 1000만원 획득\r\n- 소폭 부스트, 대폭 부스트\r\n- 상점 이동\r\n\r\n상점 부품 종류\r\n- 각 스테이지 전용 타이어\r\n- 6기통 엔진, 8기통 엔진\r\n-핸들 기어 강화";
+            HelpText.text = "아이템 종류\r\n- 100, 500, 1000만원 획득\r\n- 노멀 부스트, 슈퍼 부스트\r\n- 상점 이동\r\n\r\n상점 부품 종류\r\n- 각 스테이지 전용 타이어\r\n- 6기통 엔진, 8기통 엔진\r\n-핸들 기어 강화";
         }
     }
 
@@ -83,6 +83,7 @@ public class HelpUI : MonoBehaviour
 
     public void OnClickBackButton()
     {
+        _pagenum = 1;
         Help.SetActive(false);
     }
 
