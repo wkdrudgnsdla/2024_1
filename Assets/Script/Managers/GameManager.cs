@@ -25,7 +25,7 @@ public class GameManager : MonoBehaviour
     public bool inStage;
     public bool isMainMenu;
 
-    public float cash;
+    public double cash;
 
     public void Awake()
     {
@@ -124,7 +124,11 @@ public class GameManager : MonoBehaviour
             Finish = false;
         }
 
-       
+        if(Finish)
+        {
+            cam.followSpeed = 1;
+            cam.rotationSpeed = 1;
+        }
     }
 
     public void StartGame()

@@ -87,7 +87,7 @@ public class ItemBox : MonoBehaviour
     {
         IUM.itemnum = 1;
         GM.cash += 1000000;
-        Debug.Log("1000000만원");
+        Debug.Log("100만원");
     }
 
     private void Item2()
@@ -95,7 +95,7 @@ public class ItemBox : MonoBehaviour
         IUM.itemnum = 2;
 
         GM.cash += 5000000;
-        Debug.Log("5000000만원");
+        Debug.Log("500만원");
 
     }
 
@@ -104,7 +104,7 @@ public class ItemBox : MonoBehaviour
         IUM.itemnum = 3;
 
         GM.cash += 10000000;
-        Debug.Log("10000000만원");
+        Debug.Log("1000만원");
     }
 
     private void Item4()

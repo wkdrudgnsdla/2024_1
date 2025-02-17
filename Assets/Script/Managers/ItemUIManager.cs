@@ -66,27 +66,57 @@ public class ItemUIManager : MonoBehaviour
         {
             case 1:
                 Item1.SetActive(true);
-                ItemName.text = "1,000,000¸¸¿ø È¹µæ";
+                ItemName.text = "100¸¸¿ø È¹µæ";
+                Item2.SetActive(false);
+                Item3.SetActive(false);
+                Item4.SetActive(false);
+                Item5.SetActive(false);
+                Item6.SetActive(false);
                 break;
             case 2:
                 Item2.SetActive(true);
-                ItemName.text = "5,000,000¸¸¿ø È¹µæ";
+                ItemName.text = "500¸¸¿ø È¹µæ";
+                Item1.SetActive(false);
+                Item3.SetActive(false);
+                Item4.SetActive(false);
+                Item5.SetActive(false);
+                Item6.SetActive(false);
                 break;
             case 3:
                 Item3.SetActive(true);
-                ItemName.text = "10,000,000¸¸¿ø È¹µæ";
+                ItemName.text = "1000¸¸¿ø È¹µæ";
+                Item1.SetActive(false);
+                Item2.SetActive(false);
+                Item4.SetActive(false);
+                Item5.SetActive(false);
+                Item6.SetActive(false);
                 break;
             case 4:
                 Item4.SetActive(true);
                 ItemName.text = "³ë¸Ö ºÎ½ºÆ® »ç¿ë";
+                Item1.SetActive(false);
+                Item2.SetActive(false);
+                Item3.SetActive(false);
+                Item5.SetActive(false);
+                Item6.SetActive(false);
                 break;
             case 5:
                 Item5.SetActive(true);
                 ItemName.text = "½´ÆÛ ºÎ½ºÆ® »ç¿ë";
+                Item1.SetActive(false);
+                Item2.SetActive(false);
+                Item3.SetActive(false);
+                Item4.SetActive(false);
+                Item6.SetActive(false);
                 break;
             case 6:
                 Item6.SetActive(true);
                 ItemName.text = "»óÁ¡";
+                Item1.SetActive(false);
+                Item2.SetActive(false);
+                Item3.SetActive(false);
+                Item4.SetActive(false);
+                Item5.SetActive(false);
                 break;
             default:
                 break;
@@ -102,5 +132,6 @@ public class ItemUIManager : MonoBehaviour
         ItemLogBG.SetActive(false);
         ItemName.text = " ";
         UseItme = false;
+        itemnum = 0;
     }
 }
