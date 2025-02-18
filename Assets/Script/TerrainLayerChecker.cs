@@ -4,10 +4,11 @@ public class MultiTerrainChecker : MonoBehaviour
 {
 
     public int layerIndex;
+    public Terrain terrainUnderneath;
     void Update()
     {
         // 객체가 위치한 곳 아래에 존재하는 Terrain을 가져옵니다.
-        Terrain terrainUnderneath = GetTerrainUnderneath(transform.position);
+        terrainUnderneath = GetTerrainUnderneath(transform.position);
         if (terrainUnderneath != null)
         {
             layerIndex = GetTerrainLayerIndex(transform.position, terrainUnderneath);

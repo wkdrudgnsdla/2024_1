@@ -6,8 +6,8 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    PlayerCam cam;
-    Camera PCam;
+    public PlayerCam cam;
+    public Camera PCam;
     public PlayerMove player;
     MultiTerrainChecker MTC;
     public GameObject MainMenu;
@@ -24,6 +24,12 @@ public class GameManager : MonoBehaviour
     public bool Finish;
     public bool inStage;
     public bool isMainMenu;
+    public bool isDTires;
+    public bool isFTires;
+    public bool isCTires;
+    public bool Upgrading;
+
+    public bool UIable;
 
     public double cash;
 
@@ -44,6 +50,8 @@ public class GameManager : MonoBehaviour
         Finish = false;
         inStage = false;
         isMainMenu = true;
+        Upgrading = false;  
+        UIable = true;
         cash = 0;
     }
 
@@ -54,11 +62,13 @@ public class GameManager : MonoBehaviour
             isMainMenu = true;
             UI.SetActive(false);
         }
-        else if(MainMenu.active == false)
+        else if(MainMenu.active == false && UIable == true)
         {
             isMainMenu = false;
             UI.SetActive(true);
         }
+        
+        UnityEngine.Debug.Log(cam.followSpeed+ ","+ cam.rotationSpeed);
 
         if(!isMainMenu)
         {
@@ -72,12 +82,34 @@ public class GameManager : MonoBehaviour
 
             if (OutTrack)
             {
-                player.moveSpeed = 5;
-                PCam.fieldOfView = Mathf.Lerp(PCam.fieldOfView, 40f, Time.deltaTime);
+                if (MTC.terrainUnderneath.gameObject.CompareTag("Desert"))
+                {
+                    if (!isDTires)
+                    {
+                        player.moveSpeed = 4;
+                        PCam.fieldOfView = Mathf.Lerp(PCam.fieldOfView, 40f, Time.deltaTime);
+                    }
+                }
+                else if(MTC.terrainUnderneath.gameObject.CompareTag("Forest"))
+                {
+                    if(!isFTires)
+                    {
+                        player.moveSpeed = 4;
+                        PCam.fieldOfView = Mathf.Lerp(PCam.fieldOfView, 40f, Time.deltaTime);
+                    }
+                }
+                else if(MTC.terrainUnderneath.gameObject.CompareTag("City"))
+                {
+                    if (!isFTires)
+                    {
+                        player.moveSpeed = 4;
+                        PCam.fieldOfView = Mathf.Lerp(PCam.fieldOfView, 40f, Time.deltaTime);
+                    }
+                }
             }
             else
             {
-                player.moveSpeed = 10;
+                player.moveSpeed = player.SetSpeed;
                 PCam.fieldOfView = Mathf.Lerp(PCam.fieldOfView, 60f, Time.deltaTime);
             }
 
@@ -90,7 +122,7 @@ public class GameManager : MonoBehaviour
                 OutTrack = true;
             }
 
-            if (startRace)
+            if (startRace && !Upgrading)
             {
                 player.rb.interpolation = RigidbodyInterpolation.Interpolate;
                 player.moveable = true;
@@ -99,7 +131,7 @@ public class GameManager : MonoBehaviour
                 cam.followSpeed = 20;
                 cam.rotationSpeed = 20;
             }
-            else
+            else if(!Upgrading)
             {
                 player.moveable = false;
 
@@ -147,7 +179,7 @@ public class GameManager : MonoBehaviour
         OutTrack = false;
         Finish = false;
 
-        player.moveSpeed = 10f;
+        player.moveSpeed = 6f;
         player.turnSpeed = 1f;
         player.brakeForce = 10f;
         player.turnDamping = 1f;

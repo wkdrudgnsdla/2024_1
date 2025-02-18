@@ -11,6 +11,8 @@ public class ItemBox : MonoBehaviour
     public GameManager GM;
     public Camera PCam;
 
+    public GameObject Upgrade;
+
     private int _ItemNum;
 
     public int ItemNum
@@ -29,6 +31,7 @@ public class ItemBox : MonoBehaviour
 
     private void Awake()
     {
+        Upgrade = GameObject.Find("Upgrade");
         IUM = GameObject.Find("GameManager").GetComponent<ItemUIManager>();
         player = GameObject.Find("Player").GetComponent<PlayerMove>();
         GM = GameObject.Find("GameManager").GetComponent<GameManager>();
@@ -39,6 +42,7 @@ public class ItemBox : MonoBehaviour
     {
         _ItemNum = 0;
         changeable = true;
+        Upgrade.SetActive(false);
     }
 
 
@@ -125,7 +129,15 @@ public class ItemBox : MonoBehaviour
 
     private void Item6()
     {
+        PCam.transform.position = new Vector3(-214.2403f, -131.58f, 247.84f);
+        PCam.transform.rotation = Quaternion.Euler(15, 0, 0);
+        GM.cam.followSpeed = 0;
+        GM.cam.rotationSpeed = 0;
         IUM.itemnum = 6;
-        //상점 UI setActive true로 변경
+        Time.timeScale = 0.001f;
+        GM.UI.SetActive(false);
+        GM.UIable = false;
+        GM.Upgrading = true;
+        Upgrade.SetActive(true);
     }
 }

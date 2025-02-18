@@ -7,6 +7,9 @@ public class PlayerMove : MonoBehaviour
 {
     GameManager GM;
 
+    public float SetSpeed;
+    public float SetTurnSpeed;
+
     public float moveSpeed = 10f;
     public float turnSpeed = 1f;
     public float brakeForce = 10f;
@@ -23,11 +26,14 @@ public class PlayerMove : MonoBehaviour
         rb.useGravity = true;
         rb.drag = 0.1f;
         rb.angularDrag = 0.1f;
+        SetSpeed = 6f;
+        SetTurnSpeed = 1f;
     }
 
     private void Start()
     {
         moveable = false;
+        moveSpeed = 6;
     }
 
     private void Update()
@@ -50,7 +56,7 @@ public class PlayerMove : MonoBehaviour
         }
         else
         {
-            turnSpeed = 1;
+            turnSpeed = SetTurnSpeed;
         }
     }
 
