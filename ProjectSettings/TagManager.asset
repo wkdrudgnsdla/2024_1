@@ -9,6 +9,8 @@ TagManager:
   - BackCol
   - FrontCol
   - Desert
+  - Forest
+  - City
   layers:
   - Default
   - TransparentFX
