@@ -17,6 +17,7 @@ public class ButtonManager : MonoBehaviour
     public GameObject MenuObejct;
     public GameObject MainMenu;
     public GameObject Help;
+    public GameObject Ranking;
 
 
     public void Awake()
@@ -32,6 +33,27 @@ public class ButtonManager : MonoBehaviour
         MenuObejct = GameObject.Find("MenuObejct");
         MainMenu = GameObject.Find("MainMenu");
         Help = GameObject.Find("Help");
+        Ranking = GameObject.Find("Ranking");
+    }
+
+    public void Start()
+    {
+        Ranking.SetActive(false);
+    }
+
+    public void Update()
+    {
+        if(Ranking.active == true)
+        {
+            if(Input.GetMouseButton(0) || Input.GetMouseButton(1))
+            {
+                Ranking.SetActive(false);
+            }
+        }
+        else
+        {
+            return;
+        }
     }
 
     public void OnClickStartButton()
@@ -41,7 +63,7 @@ public class ButtonManager : MonoBehaviour
 
     public void OnClickRankingButton()
     {
-
+        Ranking.SetActive(true);
     }
 
     public void OnClickHelpButton()
