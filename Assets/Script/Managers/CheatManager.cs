@@ -24,7 +24,7 @@ public class CheatManager : MonoBehaviour
 
 
         F3();
-
+        F4();
         F5();
     }
 
@@ -42,6 +42,7 @@ public class CheatManager : MonoBehaviour
         if(Input.GetKeyUp(KeyCode.F4))
         {
             GM._StageLevel += 1;
+            GM.NextGame();
         }
     }
 
