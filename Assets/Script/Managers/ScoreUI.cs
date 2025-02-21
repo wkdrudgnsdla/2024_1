@@ -48,6 +48,7 @@ public class ScoreUI : MonoBehaviour
 
     public void OnClickNextStage()
     {
+        GM._StageLevel += 1;
         GM.NextGame();
         //다음스테이지 포지션,로테이션
         GM.StageClear.SetActive(false);

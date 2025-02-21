@@ -27,7 +27,7 @@ public class FinishLineStage1 : MonoBehaviour
         {
             StageClear.SetActive(true);
 
-            Destroy(GM.Stage1Items);
+            Destroy(GM.InStageItems);
 
             GM.Finish = true;
             GM.startRace = false;

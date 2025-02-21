@@ -309,12 +309,6 @@ public class GameManager : MonoBehaviour
             OutTrack = false;
             Finish = false;
         }
-
-        if (Finish)
-        {
-            cam.followSpeed = 1;
-            cam.rotationSpeed = 1;
-        }
     }
 
     IEnumerator Stage1Item()
