@@ -3243,7 +3243,7 @@ GameObject:
   - component: {fileID: 421430608}
   - component: {fileID: 421430607}
   m_Layer: 5
-  m_Name: Text (Legacy)
+  m_Name: NextStage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -23331,7 +23331,10 @@ MonoBehaviour:
   TimeScore: {fileID: 0}
   ResultScore: {fileID: 0}
   StageCash: {fileID: 0}
+  Result: {fileID: 0}
+  NextStage: {fileID: 0}
   Upgrade: {fileID: 0}
+  not1st: 0
 --- !u!1 &2002123283
 GameObject:
   m_ObjectHideFlags: 0
@@ -25007,10 +25010,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1175335544070786231, guid: a5bcdb68475395949b6f7386653e55b0, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 329.7
-      objectReference: {fileID: 0}
     - target: {fileID: 2200165441341555808, guid: a5bcdb68475395949b6f7386653e55b0, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1481.2037
@@ -25054,10 +25053,6 @@ PrefabInstance:
     - target: {fileID: 4278336384483874492, guid: a5bcdb68475395949b6f7386653e55b0, type: 3}
       propertyPath: m_Name
       value: Stage1Items
-      objectReference: {fileID: 0}
-    - target: {fileID: 4278336384483874492, guid: a5bcdb68475395949b6f7386653e55b0, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

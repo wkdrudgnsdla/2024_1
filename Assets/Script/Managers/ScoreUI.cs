@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -14,7 +15,11 @@ public class ScoreUI : MonoBehaviour
     public Text TimeScore;
     public Text ResultScore;
     public Text StageCash;
+    public Text Result;
+    public Text NextStage;
     public GameObject Upgrade;
+
+    public bool not1st;
 
     public void Awake()
     {
@@ -25,11 +30,14 @@ public class ScoreUI : MonoBehaviour
         TimeScore = GameObject.Find("TimeScoreText").GetComponent <Text>();
         ResultScore = GameObject.Find("ResultScoreText").GetComponent<Text>();
         StageCash = GameObject.Find("StageCash").GetComponent<Text>();
+        Result = GameObject.Find("Result").GetComponent<Text>();
+        NextStage = GameObject.Find("NextStage").GetComponent<Text>();
     }
 
     public void Start()
     {
         Upgrade.SetActive(false);
+        not1st = false;
     }
 
     public void Update()
@@ -44,14 +52,34 @@ public class ScoreUI : MonoBehaviour
 
         double cash = GM.Money / 10000;
         StageCash.text = "획득 상금    " + cash.ToString() + "만원";
-    }
 
-    public void OnClickNextStage()
+        if (not1st)
+        {
+            Result.text = "2등";
+            NextStage.text = "다시 플레이";
+        }
+        else if (!not1st)
+        {
+            Result.text = "1등";
+            NextStage.text = "다음 스테이지";
+        }
+}
+
+public void OnClickNextStage()
     {
-        GM._StageLevel += 1;
-        GM.NextGame();
-        //다음스테이지 포지션,로테이션
-        GM.StageClear.SetActive(false);
+        if(!not1st)
+        {
+            GM._StageLevel += 1;
+            GM.NextGame();
+            GM.StageClear.SetActive(false);
+        }
+        else if (not1st)
+        {
+            GM.StartGame();
+            GM.StageClear.SetActive(false);
+        }
+
+        
     }
 
     public void OnClickUpgrade()

@@ -123,7 +123,7 @@ public class GameManager : MonoBehaviour
 
     public void StartGame()
     {
-
+        Time.timeScale = 1;
 
         player.rb.velocity = Vector3.zero;
         player.rb.angularVelocity = Vector3.zero;
@@ -171,6 +171,8 @@ public class GameManager : MonoBehaviour
 
         StageScore = 0;
         TimerScore = 0;
+
+        Time.timeScale = 1;
 
         sec = 0;
         MCount = 0;

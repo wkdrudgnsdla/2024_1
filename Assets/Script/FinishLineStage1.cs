@@ -60,7 +60,41 @@ public class FinishLineStage1 : MonoBehaviour
             }
         }
         
+        if(collision.gameObject.CompareTag("Enemy"))
+        {
+            StageClear.SetActive(true);
+            Time.timeScale = 0.001f;
 
+            GM.Finish = true;
+            GM.startRace = false;
+            if (!Up)
+            {
+                GM.Money += 0;
+                GM.StageScore += 0;
+                if (GM.MCount == 1 && GM.SCount <= 10)
+                {
+                    GM.TimerScore += 0;
+                }
+                else if (GM.MCount == 1 && GM.SCount <= 40 && GM.SCount > 10)
+                {
+                    GM.TimerScore += 0;
+                }
+                else if (GM.MCount == 2 && GM.SCount <= 30 && GM.SCount > 40)
+                {
+                    GM.TimerScore += 0;
+                }
+                else if (GM.MCount < 1)
+                {
+                    GM.TimerScore = 0;
+                }
+                else
+                {
+                    GM.TimerScore += 0;
+                }
+                GM.cash += GM.Money;
+                Up = true;
+            }
+        }
 
 
         GM.player.rb.velocity = Vector3.Lerp(GM.player.rb.velocity, Vector3.zero, Time.deltaTime * 40);
