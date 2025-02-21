@@ -13,6 +13,7 @@ TagManager:
   - City
   - Item
   - Enemy
+  - CrashEnemy
   layers:
   - Default
   - TransparentFX

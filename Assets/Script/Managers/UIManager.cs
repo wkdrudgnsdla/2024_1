@@ -55,7 +55,7 @@ public class UIManager : MonoBehaviour
         {
             StartCoroutine(F4());
         }
-        else if(!Input.GetKeyUp(KeyCode.F5))
+        else if(Input.GetKeyUp(KeyCode.F5))
         {
             StartCoroutine(F5());
         }
