@@ -148,5 +148,10 @@ public class UpgradeManager : MonoBehaviour
         GM.PCam.transform.position = GM.player.transform.position;
 
         GM.Upgrading = false;
+
+        if(GM.Finish)
+        {
+            GM.StageClear.SetActive(true);
+        }
     }
 }

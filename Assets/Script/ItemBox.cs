@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using Unity.VisualScripting.Dependencies.NCalc;
 using UnityEngine;
+using System.Linq;
 
 public class ItemBox : MonoBehaviour
 {
@@ -42,8 +43,21 @@ public class ItemBox : MonoBehaviour
     {
         _ItemNum = 0;
         changeable = true;
-        Upgrade.SetActive(false);
+
+        
     }
+
+    public void Update()
+    {
+        if(Upgrade == null)
+        {
+            GameObject upgradeComp = Resources.FindObjectsOfTypeAll<GameObject>().FirstOrDefault(go => go.name == "Upgrade");
+                Debug.Log("Find Component...");
+            Upgrade = upgradeComp;
+        }
+        
+    }
+
 
 
     private void OnTriggerEnter(Collider collision)

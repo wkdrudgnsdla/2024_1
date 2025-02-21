@@ -9,6 +9,8 @@ public class ButtonManager : MonoBehaviour
 {
     Scene scene;
 
+    public GameManager GM;
+
     public Button StartButton;
     public Button RankingButton;
     public Button HelpButton;
@@ -22,6 +24,7 @@ public class ButtonManager : MonoBehaviour
 
     public void Awake()
     {
+        GM = GameObject.Find("GameManager").GetComponent<GameManager>();
 
         MenuObejct = GameObject.Find("MenuObejct");
         
@@ -59,6 +62,7 @@ public class ButtonManager : MonoBehaviour
     public void OnClickStartButton()
     {
         MainMenu.SetActive(false);
+        GM.StartGame();
     }
 
     public void OnClickRankingButton()

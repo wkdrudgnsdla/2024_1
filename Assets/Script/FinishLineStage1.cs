@@ -27,6 +27,8 @@ public class FinishLineStage1 : MonoBehaviour
         {
             StageClear.SetActive(true);
 
+            Destroy(GM.Stage1Items);
+
             GM.Finish = true;
             GM.startRace = false;
             if (!Up)
@@ -53,6 +55,7 @@ public class FinishLineStage1 : MonoBehaviour
                 {
                     GM.TimerScore += 0;
                 }
+                GM.cash += GM.Money;
                 Up = true;
             }
         }
