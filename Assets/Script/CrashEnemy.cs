@@ -10,4 +10,12 @@ public class CrashEnemy : MonoBehaviour
     {
         transform.Translate(Vector2.right * moveSpeed * Time.deltaTime);
     }
+
+    private void OnTriggerEnter(Collider collision)
+    {
+        if(collision.gameObject.CompareTag("Player"))
+        {
+            Destroy(gameObject);
+        }
+    }
 }

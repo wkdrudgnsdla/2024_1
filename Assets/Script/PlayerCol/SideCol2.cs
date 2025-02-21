@@ -6,7 +6,7 @@ using UnityEngine;
 public class SideCol2 : MonoBehaviour
 {
     public GameManager GM;
-    public float downSpeed = 3f;
+    public float downSpeed = 6f;
 
     public void Awake()
     {

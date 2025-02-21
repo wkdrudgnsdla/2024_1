@@ -5,7 +5,7 @@ using UnityEngine;
 public class BackCol : MonoBehaviour
 {
     public GameManager GM;
-    public float downSpeed = 5f;
+    public float downSpeed = 10f;
 
     public void Awake()
     {

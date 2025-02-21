@@ -6,7 +6,7 @@ using UnityEngine;
 public class FrontCol : MonoBehaviour
 {
     public GameManager GM;
-    public float downSpeed = 5f;
+    public float downSpeed = 10f;
    
     public void Awake()
     {
