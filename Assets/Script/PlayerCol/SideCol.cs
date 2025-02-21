@@ -14,6 +14,13 @@ public class SideCol : MonoBehaviour
 
     private void OnTriggerEnter(Collider collision)
     {
-        GM.player.rb.velocity = GM.player.rb.velocity.normalized * (GM.player.rb.velocity.magnitude - downSpeed);
+        if (collision.gameObject.CompareTag("Forest") || collision.gameObject.CompareTag("Desert") || collision.gameObject.CompareTag("City") || collision.gameObject.CompareTag("Item"))
+        {
+            return;
+        }
+        else
+        {
+            GM.player.rb.velocity = GM.player.rb.velocity.normalized * (GM.player.rb.velocity.magnitude - downSpeed);
+        }
     }
 }

@@ -51,14 +51,35 @@ public class UIManager : MonoBehaviour
         {
             StartCoroutine(F3());
         }
+        else if(Input.GetKeyUp(KeyCode.F4))
+        {
+            StartCoroutine(F4());
+        }
+        else if(!Input.GetKeyUp(KeyCode.F5))
+        {
+            StartCoroutine(F5());
+        }
 
         int speed = (int)player.currentSpeed * 3;
-        SpeedText.text = speed.ToString() + "km/h";
+        SpeedText.text = speed.ToString();
     }
 
     IEnumerator F3()
     {
         Cheat.text = "F3: 레이스 재시작";
+        yield return new WaitForSeconds(1.2f);
+        Cheat.text = " ";
+    }
+
+    IEnumerator F4()
+    {
+        Cheat.text = "F4: 다음 스테이지로 이동";
+        yield return new WaitForSeconds(1.2f);
+        Cheat.text = " ";
+    }
+    IEnumerator F5()
+    {
+        Cheat.text = "F5: 게임 일시 정지";
         yield return new WaitForSeconds(1.2f);
         Cheat.text = " ";
     }

@@ -10,6 +10,8 @@ public class ScoreUI : MonoBehaviour
 {
     public GameManager GM;
     public ItemUIManager IUM;
+    public InputField PlayerNameInput;
+    public GameObject InputField;
 
     public Text StageScore;
     public Text TimeScore;
@@ -23,6 +25,8 @@ public class ScoreUI : MonoBehaviour
 
     public void Awake()
     {
+        PlayerNameInput = GameObject.Find("PlayerNameInput").GetComponent<InputField>();
+        InputField = GameObject.Find("PlayerNameInput");
         Upgrade = GameObject.Find("Upgrade");
         GM = gameObject.GetComponent<GameManager>();
         IUM = gameObject.GetComponent<ItemUIManager>();
@@ -38,11 +42,20 @@ public class ScoreUI : MonoBehaviour
     {
         Upgrade.SetActive(false);
         not1st = false;
+        InputField.SetActive(false);
     }
 
     public void Update()
     {
-        GM.Resultscore = GM.StageScore + GM.TimerScore;
+        if(GM.GameAllClear)
+        {
+            InputField.SetActive(true);
+        }
+
+
+        GM.Resultscore = GM.StageScore + GM.TimerScore + GM.BeforRoundScore;
+
+
 
         ResultScore.text = "총 점수 : " + GM.Resultscore.ToString() + "점";
 
@@ -65,11 +78,17 @@ public class ScoreUI : MonoBehaviour
             Result.color = new Color(255, 214, 0);
             NextStage.text = "다음 스테이지";
         }
+        else if(GM.GameAllClear)
+        {
+            NextStage.text = "메뉴화면으로";
+        }
 }
 
 public void OnClickNextStage()
     {
-        if(!not1st)
+        GM.Money = 0;
+
+        if (!not1st)
         {
             GM._StageLevel += 1;
             GM.NextGame();
@@ -98,6 +117,5 @@ public void OnClickNextStage()
         GM.Upgrading = true;
         Upgrade.SetActive(true);
         GM.StageClear.SetActive(false);
-        GM.Money = 0;
     }
 }

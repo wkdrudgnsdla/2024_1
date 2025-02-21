@@ -12,6 +12,7 @@ TagManager:
   - Forest
   - City
   - Item
+  - Enemy
   layers:
   - Default
   - TransparentFX

@@ -4,6 +4,7 @@ using System.Diagnostics;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SocialPlatforms;
+using UnityEngine.SocialPlatforms.Impl;
 
 public class GameManager : MonoBehaviour
 {
@@ -11,12 +12,14 @@ public class GameManager : MonoBehaviour
     public Camera PCam;
     public PlayerMove player;
     MultiTerrainChecker MTC;
+    PaintDetailChecker PDC;
     public GameObject MainMenu;
     public GameObject UI;
     public GameObject StageClear;
 
     public GameObject InStageItems;
     public GameObject Stage1Items;
+    public GameObject Stage2Items;
 
     public float sec { get;set;}
     public float StartCountdown;
@@ -51,24 +54,31 @@ public class GameManager : MonoBehaviour
     public bool isFTires;
     public bool isCTires;
     public bool Upgrading;
-    public bool ReSpawnItem;
+    public bool ReSpawnItem1;
+    public bool ReSpawnItem2;
 
     public bool UIable;
 
     public bool STBost;
 
+    public bool UpScore;
+
     public double cash;
     public double Money;
+
+    public bool GameAllClear;//이거 3번째 엔드포인트에서 활성화
 
     public double StageScore;
     public double TimerScore;
     public double Resultscore;
+    public double BeforRoundScore;
 
     public void Awake()
     {
         cam = GameObject.Find("PlayerCam").GetComponent<PlayerCam>();
         PCam = cam.GetComponent<Camera>();
         player = GameObject.Find("Player").GetComponent<PlayerMove>();
+        PDC = player.GetComponent<PaintDetailChecker>();
         MTC = player.GetComponent<MultiTerrainChecker>();
         MainMenu = GameObject.Find("MainMenu");
         UI = GameObject.Find("UI");
@@ -76,10 +86,12 @@ public class GameManager : MonoBehaviour
 
         InStageItems = GameObject.FindWithTag("Item");
         Stage1Items = Resources.Load("Stage1Items") as GameObject;
+        Stage2Items = Resources.Load("Stage2Items") as GameObject;
     }
 
     public void Start()
     {
+        GameAllClear = false;
         StartCountdown = 4;
         OutTrack = false;
         Finish = false;
@@ -89,12 +101,16 @@ public class GameManager : MonoBehaviour
         UIable = true;
         cash = 0;
         STBost = false;
-        ReSpawnItem = false;
+        ReSpawnItem1 = false;
+        ReSpawnItem2 = false;
+        UpScore = false; 
 
         TimerScore = 0;
         Resultscore = 0;
         StageScore = 0;
+        BeforRoundScore = 0;
         Money = 0;
+        StageLevel = 1;
     }
 
     public void Update()
@@ -118,12 +134,14 @@ public class GameManager : MonoBehaviour
         {
             InStageItems = GameObject.FindWithTag("Item");
             StartCoroutine(Stage1Item());
+            StartCoroutine(Stage2Item());
         }
     }
 
     public void StartGame()
     {
         Time.timeScale = 1;
+        GameAllClear = false ;
 
         player.rb.velocity = Vector3.zero;
         player.rb.angularVelocity = Vector3.zero;
@@ -132,20 +150,21 @@ public class GameManager : MonoBehaviour
         StageScore = 0;
         TimerScore = 0;
         Resultscore = 0;
-
-        StageLevel = 1;
+        BeforRoundScore = 0;
 
         sec = 0;
         MCount = 0;
         SCount = 0;
         cash = 0;
 
+        UpScore = false;
         startRace = false;
         StartCountdown = 4;
         OutTrack = false;
         Finish = false;
         STBost = false;
-        ReSpawnItem = false;
+        ReSpawnItem1 = false;
+        ReSpawnItem2 = false;
 
         player.moveSpeed = 6f;
         player.turnSpeed = 1f;
@@ -154,13 +173,26 @@ public class GameManager : MonoBehaviour
         player.extraGravity = 5f;
         player.currentSpeed = 0;
         player.moveable = false;
-        player.transform.position = new Vector3(74.4f, 2.5f, 5.5f);
-        player.transform.rotation = Quaternion.Euler(0, 0, 0);
+        if (StageLevel == 1)
+        {
+            player.transform.position = new Vector3(164.3f, 2.5f, 5.5f);
+            player.transform.rotation = Quaternion.Euler(0, 0, 0);
 
 
-        cam.transform.position = new Vector3(843, 1029, 275);
-        cam.followSpeed = 1;
-        cam.rotationSpeed = 2;
+            cam.transform.position = new Vector3(843, 1029, 275);
+            cam.transform.rotation = Quaternion.Euler(90, 0, 0);
+        }
+
+        if (StageLevel == 2)
+        {
+            player.transform.position = new Vector3(1164.129f, -354.97f, -3000.2f);
+            player.transform.rotation = Quaternion.Euler(0, 0, 0);
+
+            cam.transform.position = new Vector3(1944.06f, 1374.4f, -2336.2f);
+            cam.transform.rotation = Quaternion.Euler(90, 0, 0);
+            cam.followSpeed = 1;
+            cam.rotationSpeed = 2;
+        }
     }
 
     public void NextGame()
@@ -178,12 +210,15 @@ public class GameManager : MonoBehaviour
         MCount = 0;
         SCount = 0;
 
+        BeforRoundScore = Resultscore;
         startRace = false;
         StartCountdown = 4;
         OutTrack = false;
         Finish = false;
         STBost = false;
-        ReSpawnItem = false;
+        UpScore = false;
+        ReSpawnItem1 = false;
+        ReSpawnItem2 = false;
 
         player.extraGravity = 5f;
         player.currentSpeed = 0;
@@ -191,7 +226,7 @@ public class GameManager : MonoBehaviour
 
         if(StageLevel == 1)
         {
-            player.transform.position = new Vector3(74.4f, 2.5f, 5.5f);
+            player.transform.position = new Vector3(164.3f, 2.5f, 5.5f);
             player.transform.rotation = Quaternion.Euler(0, 0, 0);
 
 
@@ -269,7 +304,11 @@ public class GameManager : MonoBehaviour
 
             UnityEngine.Debug.Log(MTC.layerIndex);
 
-            if (MTC.layerIndex == 1 || MTC.layerIndex == 3)
+            if(PDC.isOnPaintDetail)
+            {
+                OutTrack = true;
+            }
+            else if (MTC.layerIndex == 1 || MTC.layerIndex == 3 || MTC.layerIndex == 5 || MTC.layerIndex == 0)
             {
                 OutTrack = false;
             }
@@ -315,7 +354,7 @@ public class GameManager : MonoBehaviour
 
     IEnumerator Stage1Item()
     {
-        if(!ReSpawnItem)
+        if(!ReSpawnItem1)
         {
             GameObject Item = MonoBehaviour.Instantiate(Stage1Items);
             Item.name = "Stage1Items";
@@ -323,7 +362,21 @@ public class GameManager : MonoBehaviour
             Item.transform.position = pos;
         }
 
-        ReSpawnItem = true;
+        ReSpawnItem1 = true;
+        yield return null;
+    }
+    
+    IEnumerator Stage2Item()
+    {
+        if(!ReSpawnItem2)
+        {
+            GameObject Item = MonoBehaviour.Instantiate(Stage2Items);
+            Item.name = "Stage2Items";
+            Vector3 pos = new Vector3(1737.29f, -350.8989f, -3022.426f);
+            Item.transform.position = pos;
+        }
+
+        ReSpawnItem2 = true;
         yield return null;
     }
 }
