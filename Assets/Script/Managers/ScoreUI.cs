@@ -56,11 +56,13 @@ public class ScoreUI : MonoBehaviour
         if (not1st)
         {
             Result.text = "2등";
+            Result.color = new Color(171, 171, 171);
             NextStage.text = "다시 플레이";
         }
         else if (!not1st)
         {
             Result.text = "1등";
+            Result.color = new Color(255, 214, 0);
             NextStage.text = "다음 스테이지";
         }
 }
