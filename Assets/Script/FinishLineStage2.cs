@@ -27,7 +27,8 @@ public class FinishLineStage2 : MonoBehaviour
         {
             StageClear.SetActive(true);
 
-            Destroy(GM.InStageItems);
+            Destroy(GM._Stage2Items);
+            Destroy(GM._Stage1Items);
 
             GM.Finish = true;
             GM.startRace = false;
@@ -62,6 +63,7 @@ public class FinishLineStage2 : MonoBehaviour
 
         if (collision.gameObject.CompareTag("Enemy"))
         {
+            Debug.Log("Lose");
             StageClear.SetActive(true);
             Time.timeScale = 0.001f;
 

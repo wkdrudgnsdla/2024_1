@@ -32,7 +32,8 @@ public class CheatManager : MonoBehaviour
     {
         if (Input.GetKeyUp(KeyCode.F3))
         {
-            Destroy(GM.InStageItems);
+            Destroy(GM._Stage1Items);
+            Destroy(GM._Stage2Items);
             GM.StartGame();
         }
     }

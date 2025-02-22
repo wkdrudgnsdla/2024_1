@@ -63,6 +63,7 @@ public class ButtonManager : MonoBehaviour
     {
         MainMenu.SetActive(false);
         GM.StartGame();
+        GM.Stage1Enemy.SetActive(true);
     }
 
     public void OnClickRankingButton()

@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -11,15 +12,19 @@ public class GameManager : MonoBehaviour
     public PlayerCam cam;
     public Camera PCam;
     public PlayerMove player;
+    public GameObject Stage1Enemy;
+    public GameObject Stage2Enemy;
+
     MultiTerrainChecker MTC;
     PaintDetailChecker PDC;
     public GameObject MainMenu;
     public GameObject UI;
     public GameObject StageClear;
 
-    public GameObject InStageItems;
     public GameObject Stage1Items;
+    public GameObject _Stage1Items;
     public GameObject Stage2Items;
+    public GameObject _Stage2Items;
 
     public float sec { get;set;}
     public float StartCountdown;
@@ -61,6 +66,8 @@ public class GameManager : MonoBehaviour
 
     public bool STBost;
 
+    public bool lose;
+
     public bool UpScore;
 
     public double cash;
@@ -75,6 +82,9 @@ public class GameManager : MonoBehaviour
 
     public void Awake()
     {
+        Stage1Enemy = GameObject.Find("Stage1Enemy");
+        Stage2Enemy = GameObject.Find("Stage2Enemy");
+
         cam = GameObject.Find("PlayerCam").GetComponent<PlayerCam>();
         PCam = cam.GetComponent<Camera>();
         player = GameObject.Find("Player").GetComponent<PlayerMove>();
@@ -84,9 +94,11 @@ public class GameManager : MonoBehaviour
         UI = GameObject.Find("UI");
         StageClear = GameObject.Find("StageClear");
 
-        InStageItems = GameObject.FindWithTag("Item");
         Stage1Items = Resources.Load("Stage1Items") as GameObject;
         Stage2Items = Resources.Load("Stage2Items") as GameObject;
+
+        _Stage1Items = GameObject.Find("Stage1Items");
+        _Stage2Items = GameObject.Find("Stage2Items");
     }
 
     public void Start()
@@ -104,6 +116,7 @@ public class GameManager : MonoBehaviour
         ReSpawnItem1 = false;
         ReSpawnItem2 = false;
         UpScore = false; 
+        lose = false;
 
         TimerScore = 0;
         Resultscore = 0;
@@ -115,7 +128,16 @@ public class GameManager : MonoBehaviour
 
     public void Update()
     {
-        if(MainMenu.active == true)
+        if(_Stage1Items == null)
+        {
+            _Stage1Items = GameObject.Find("Stage1Items");
+        }
+        if(_Stage2Items == null)
+        {
+            _Stage2Items = GameObject.Find("Stage2Items");
+        }
+
+        if (MainMenu.active == true)
         {
             isMainMenu = true;
             UI.SetActive(false);
@@ -130,11 +152,33 @@ public class GameManager : MonoBehaviour
 
         GameCheck();
 
-        if(InStageItems == null)
+        if(_Stage1Items == null)
         {
-            InStageItems = GameObject.FindWithTag("Item");
             StartCoroutine(Stage1Item());
+        }
+
+        if(_Stage2Items == null)
+        {
             StartCoroutine(Stage2Item());
+        }
+
+
+        if (StageLevel != 1)
+        {
+            Stage1Enemy.SetActive(false);
+        }
+        else if(StageLevel == 1)
+        {
+            Stage1Enemy.SetActive(true);
+        }
+
+        if(StageLevel != 2)
+        {
+            Stage2Enemy.SetActive(false);
+        }
+        else if(StageLevel == 2)
+        {
+            Stage2Enemy.SetActive(true);
         }
     }
 
@@ -165,6 +209,7 @@ public class GameManager : MonoBehaviour
         STBost = false;
         ReSpawnItem1 = false;
         ReSpawnItem2 = false;
+        lose = false;
 
         player.moveSpeed = 6f;
         player.turnSpeed = 1f;
@@ -175,16 +220,22 @@ public class GameManager : MonoBehaviour
         player.moveable = false;
         if (StageLevel == 1)
         {
+            //---------------플레이어-----------
             player.transform.position = new Vector3(164.3f, 2.5f, 5.5f);
             player.transform.rotation = Quaternion.Euler(0, 0, 0);
 
 
             cam.transform.position = new Vector3(843, 1029, 275);
             cam.transform.rotation = Quaternion.Euler(90, 0, 0);
+
+            //--------------적--------------
+            Stage1Enemy.transform.position = new Vector3(164.3f, 2.5f, -9.271066f);
+            Stage1Enemy.transform.rotation = Quaternion.Euler(0,0,0);
         }
 
         if (StageLevel == 2)
         {
+            //------------------플레이어-----------
             player.transform.position = new Vector3(1164.129f, -354.97f, -3000.2f);
             player.transform.rotation = Quaternion.Euler(0, 0, 0);
 
@@ -192,6 +243,10 @@ public class GameManager : MonoBehaviour
             cam.transform.rotation = Quaternion.Euler(90, 0, 0);
             cam.followSpeed = 1;
             cam.rotationSpeed = 2;
+
+            //--------------적--------------
+            Stage2Enemy.transform.position = new Vector3(1164.129f, -354.97f, -3031.31f);
+            Stage2Enemy.transform.rotation = Quaternion.Euler(0, 0, 0);
         }
     }
 
@@ -219,6 +274,7 @@ public class GameManager : MonoBehaviour
         UpScore = false;
         ReSpawnItem1 = false;
         ReSpawnItem2 = false;
+        lose = false;
 
         player.extraGravity = 5f;
         player.currentSpeed = 0;
@@ -296,13 +352,13 @@ public class GameManager : MonoBehaviour
                 startRace = true;
                 if (!STBost)
                 {
-                    player.rb.AddForce(Vector3.right * 100, ForceMode.Impulse);
+                    player.rb.AddForce(Vector3.right * 80, ForceMode.Impulse);
                     STBost = true;
                 }
             }
 
 
-            UnityEngine.Debug.Log(MTC.layerIndex);
+            //UnityEngine.Debug.Log(MTC.layerIndex);
 
             if(PDC.isOnPaintDetail)
             {

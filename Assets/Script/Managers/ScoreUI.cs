@@ -66,13 +66,13 @@ public class ScoreUI : MonoBehaviour
         double cash = GM.Money / 10000;
         StageCash.text = "획득 상금    " + cash.ToString() + "만원";
 
-        if (not1st)
+        if (GM.lose)
         {
-            Result.text = "2등";
+            Result.text = "패배";
             Result.color = new Color(171, 171, 171);
             NextStage.text = "다시 플레이";
         }
-        else if (!not1st)
+        else if (!GM.lose)
         {
             Result.text = "1등";
             Result.color = new Color(255, 214, 0);
@@ -82,20 +82,27 @@ public class ScoreUI : MonoBehaviour
         {
             NextStage.text = "메뉴화면으로";
         }
-}
+    }
 
 public void OnClickNextStage()
     {
         GM.Money = 0;
 
-        if (!not1st)
+        if (!GM.lose)
         {
+            if (GM._StageLevel == 1)
+            {
+                GM.Stage1Enemy.SetActive(false);
+            }
             GM._StageLevel += 1;
             GM.NextGame();
             GM.StageClear.SetActive(false);
+
         }
-        else if (not1st)
+        else if (GM.lose)
         {
+            Destroy(GM.Stage1Items);
+            Destroy(GM.Stage2Items);
             GM.StartGame();
             GM.StageClear.SetActive(false);
         }
