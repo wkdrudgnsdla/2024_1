@@ -1454,7 +1454,7 @@ GameObject:
   - component: {fileID: 7184116876058304008}
   m_Layer: 0
   m_Name: ItemBox
-  m_TagString: Untagged
+  m_TagString: Item
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1561,8 +1561,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1c830d3b369869448be10695ace2001, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  IUM: {fileID: 0}
   player: {fileID: 0}
   GM: {fileID: 0}
+  PCam: {fileID: 0}
+  Upgrade: {fileID: 0}
   changeable: 0
 --- !u!1 &7454095126208526778
 GameObject:

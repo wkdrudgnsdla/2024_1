@@ -5,11 +5,13 @@ using UnityEngine;
 public class BackCol : MonoBehaviour
 {
     public GameManager GM;
-    public float downSpeed = 10f;
+    public CrashUIManager CUIM;
+    public float downSpeed = 40f;
 
     public void Awake()
     {
         GM = GameObject.Find("GameManager").GetComponent<GameManager>();
+        CUIM = GameObject.Find("GameManager").GetComponent<CrashUIManager>();
     }
 
     private void OnTriggerEnter(Collider collision)
@@ -21,6 +23,7 @@ public class BackCol : MonoBehaviour
         else
         {
             GM.player.rb.velocity = GM.player.rb.velocity.normalized * (GM.player.rb.velocity.magnitude + downSpeed);
+            CUIM.isback = true;
         }
     }
 }

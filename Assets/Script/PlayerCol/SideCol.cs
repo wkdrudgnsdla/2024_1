@@ -5,11 +5,13 @@ using UnityEngine;
 public class SideCol : MonoBehaviour
 {
     public GameManager GM;
-    public float downSpeed = 6f;
+    public CrashUIManager CUIM;
+    public float downSpeed = 24f;
 
     public void Awake()
     {
         GM = GameObject.Find("GameManager").GetComponent<GameManager>();
+        CUIM = GameObject.Find("GameManager").GetComponent<CrashUIManager>();
     }
 
     private void OnTriggerEnter(Collider collision)
@@ -21,6 +23,7 @@ public class SideCol : MonoBehaviour
         else
         {
             GM.player.rb.velocity = GM.player.rb.velocity.normalized * (GM.player.rb.velocity.magnitude - downSpeed);
+            CUIM.isside = true;
         }
     }
 }
