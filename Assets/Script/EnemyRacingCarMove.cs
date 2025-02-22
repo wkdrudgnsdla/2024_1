@@ -67,6 +67,11 @@ public class SplineEnemyMover : MonoBehaviour
 
     void Update()
     {
+        if(GM.Finish)
+        {
+            return;
+        }
+
         // 게임 매니저의 StartCountdown이 1보다 클 경우 (아직 카운트다운 중이면)
         // 적이 움직이지 않고 내부 이동 상태를 초기화하여 게임 재시작 시 처음부터 진행하도록 함.
         if (GM.StartCountdown > 1)

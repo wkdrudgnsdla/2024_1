@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FinishLineStage2 : MonoBehaviour
+public class FinishLineStage3 : MonoBehaviour
 {
     public GameManager GM;
     public GameObject StageClear;
@@ -34,7 +34,7 @@ public class FinishLineStage2 : MonoBehaviour
             GM.startRace = false;
             if (!Up)
             {
-                GM.Money += 10000000;
+                GM.GameAllClear = true;
                 GM.StageScore += 70000;
                 if (GM.MCount == 1 && GM.SCount <= 10)
                 {

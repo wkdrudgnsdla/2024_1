@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
     public PlayerMove player;
     public GameObject Stage1Enemy;
     public GameObject Stage2Enemy;
+    public GameObject Stage3Enemy;
 
     MultiTerrainChecker MTC;
     PaintDetailChecker PDC;
@@ -25,6 +26,8 @@ public class GameManager : MonoBehaviour
     public GameObject _Stage1Items;
     public GameObject Stage2Items;
     public GameObject _Stage2Items;
+    public GameObject Stage3Items;
+    public GameObject _Stage3Items;
 
     public float sec { get;set;}
     public float StartCountdown;
@@ -61,6 +64,7 @@ public class GameManager : MonoBehaviour
     public bool Upgrading;
     public bool ReSpawnItem1;
     public bool ReSpawnItem2;
+    public bool ReSpawnItem3;
 
     public bool UIable;
 
@@ -71,6 +75,8 @@ public class GameManager : MonoBehaviour
     public bool UpScore;
 
     public double cash;
+    public double SetCash;
+
     public double Money;
 
     public bool GameAllClear;//이거 3번째 엔드포인트에서 활성화
@@ -84,6 +90,7 @@ public class GameManager : MonoBehaviour
     {
         Stage1Enemy = GameObject.Find("Stage1Enemy");
         Stage2Enemy = GameObject.Find("Stage2Enemy");
+        Stage3Enemy = GameObject.Find("Stage3Enemy");
 
         cam = GameObject.Find("PlayerCam").GetComponent<PlayerCam>();
         PCam = cam.GetComponent<Camera>();
@@ -96,9 +103,11 @@ public class GameManager : MonoBehaviour
 
         Stage1Items = Resources.Load("Stage1Items") as GameObject;
         Stage2Items = Resources.Load("Stage2Items") as GameObject;
+        Stage3Items = Resources.Load("Stage3Items") as GameObject;
 
         _Stage1Items = GameObject.Find("Stage1Items");
         _Stage2Items = GameObject.Find("Stage2Items");
+        _Stage3Items = GameObject.Find("Stage3Items");
     }
 
     public void Start()
@@ -112,9 +121,11 @@ public class GameManager : MonoBehaviour
         Upgrading = false;  
         UIable = true;
         cash = 0;
+        SetCash = 0;
         STBost = false;
         ReSpawnItem1 = false;
         ReSpawnItem2 = false;
+        ReSpawnItem3 = false;
         UpScore = false; 
         lose = false;
 
@@ -135,6 +146,10 @@ public class GameManager : MonoBehaviour
         if(_Stage2Items == null)
         {
             _Stage2Items = GameObject.Find("Stage2Items");
+        }
+        if(_Stage3Items == null)
+        {
+            _Stage3Items = GameObject.Find("Stage3Items");
         }
 
         if (MainMenu.active == true)
@@ -180,6 +195,15 @@ public class GameManager : MonoBehaviour
         {
             Stage2Enemy.SetActive(true);
         }
+
+        if(StageLevel != 3)
+        {
+            Stage3Enemy.SetActive(false);
+        }
+        else if(StageLevel == 3)
+        {
+            Stage3Enemy.SetActive(true);
+        }
     }
 
     public void StartGame()
@@ -194,12 +218,11 @@ public class GameManager : MonoBehaviour
         StageScore = 0;
         TimerScore = 0;
         Resultscore = 0;
-        BeforRoundScore = 0;
 
         sec = 0;
         MCount = 0;
         SCount = 0;
-        cash = 0;
+        cash = SetCash;
 
         UpScore = false;
         startRace = false;
@@ -209,6 +232,7 @@ public class GameManager : MonoBehaviour
         STBost = false;
         ReSpawnItem1 = false;
         ReSpawnItem2 = false;
+        ReSpawnItem3 = false;
         lose = false;
 
         player.moveSpeed = 6f;
@@ -224,7 +248,7 @@ public class GameManager : MonoBehaviour
             player.transform.position = new Vector3(164.3f, 2.5f, 5.5f);
             player.transform.rotation = Quaternion.Euler(0, 0, 0);
 
-
+            //------------------카메라--------------
             cam.transform.position = new Vector3(843, 1029, 275);
             cam.transform.rotation = Quaternion.Euler(90, 0, 0);
 
@@ -239,6 +263,7 @@ public class GameManager : MonoBehaviour
             player.transform.position = new Vector3(1164.129f, -354.97f, -3000.2f);
             player.transform.rotation = Quaternion.Euler(0, 0, 0);
 
+            //------------------카메라--------------
             cam.transform.position = new Vector3(1944.06f, 1374.4f, -2336.2f);
             cam.transform.rotation = Quaternion.Euler(90, 0, 0);
             cam.followSpeed = 1;
@@ -247,6 +272,21 @@ public class GameManager : MonoBehaviour
             //--------------적--------------
             Stage2Enemy.transform.position = new Vector3(1164.129f, -354.97f, -3031.31f);
             Stage2Enemy.transform.rotation = Quaternion.Euler(0, 0, 0);
+        }
+
+        if(StageLevel == 3)
+        {
+            //-------------------플레이어------------------
+            player.transform.position = new Vector3(1769.1f, -743.26f, -4130.2f);
+            player.transform.rotation = Quaternion.Euler(0, 211.12f, 0);
+
+            //------------------카메라--------------
+            cam.transform.position = new Vector3(1575f, 1221.92f, -4987.59f);
+            cam.transform.rotation = Quaternion.Euler(90, 90, 0);
+
+            //---------------------적-------------------
+            Stage3Enemy.transform.position = new Vector3(1781.7f, -743.26f, -4109.2f);
+            Stage3Enemy.transform.rotation = Quaternion.Euler(0, 211.12f, 0);
         }
     }
 
@@ -274,6 +314,7 @@ public class GameManager : MonoBehaviour
         UpScore = false;
         ReSpawnItem1 = false;
         ReSpawnItem2 = false;
+        ReSpawnItem3 = false;
         lose = false;
 
         player.extraGravity = 5f;
@@ -289,8 +330,7 @@ public class GameManager : MonoBehaviour
             cam.transform.position = new Vector3(843, 1029, 275);
             cam.transform.rotation = Quaternion.Euler(90, 0, 0);
         }
-
-        if (StageLevel == 2)
+        else if (StageLevel == 2)
         {
             player.transform.position = new Vector3(1164.129f, -354.97f, -3000.2f);
             player.transform.rotation = Quaternion.Euler(0, 0, 0);
@@ -300,8 +340,16 @@ public class GameManager : MonoBehaviour
             cam.followSpeed = 1;
             cam.rotationSpeed = 2;
         }
-       
+        else if (StageLevel == 3)
+        {
+            player.transform.position = new Vector3(1769.1f, -743.26f, -4130.2f);
+            player.transform.rotation = Quaternion.Euler(0, 211.12f, 0);
 
+            cam.transform.position = new Vector3(1575f, 1221.92f, -4987.59f);
+            cam.transform.rotation = Quaternion.Euler(90, 90, 0);
+            cam.followSpeed = 1;
+            cam.rotationSpeed = 2;
+        }
     }
 
     public void outTrack()
@@ -326,7 +374,7 @@ public class GameManager : MonoBehaviour
             }
             else if (MTC.terrainUnderneath.gameObject.CompareTag("City"))
             {
-                if (!isFTires)
+                if (!isCTires)
                 {
                     player.moveSpeed = 4;
                     PCam.fieldOfView = Mathf.Lerp(PCam.fieldOfView, 40f, Time.deltaTime);
@@ -352,7 +400,14 @@ public class GameManager : MonoBehaviour
                 startRace = true;
                 if (!STBost)
                 {
-                    player.rb.AddForce(Vector3.right * 80, ForceMode.Impulse);
+                    if (MTC.terrainUnderneath.gameObject.CompareTag("City"))
+                    {
+                        player.rb.AddForce(Vector3.right * -80, ForceMode.Impulse);
+                    }
+                    else
+                    {
+                        player.rb.AddForce(Vector3.right * 80, ForceMode.Impulse);
+                    }
                     STBost = true;
                 }
             }
@@ -433,6 +488,20 @@ public class GameManager : MonoBehaviour
         }
 
         ReSpawnItem2 = true;
+        yield return null;
+    }
+
+    IEnumerator Stage3Item()
+    {
+        if (!ReSpawnItem3)
+        {
+            GameObject Item = MonoBehaviour.Instantiate(Stage3Items);
+            Item.name = "Stage3Items";
+            Vector3 pos = new Vector3(1341.44f, -538.2f, -4039.446f);
+            Item.transform.position = pos;
+        }
+
+        ReSpawnItem3 = true;
         yield return null;
     }
 }

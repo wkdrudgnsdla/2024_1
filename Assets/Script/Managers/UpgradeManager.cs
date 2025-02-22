@@ -154,4 +154,27 @@ public class UpgradeManager : MonoBehaviour
             GM.StageClear.SetActive(true);
         }
     }
+
+    public void ResetUpGrade()
+    {
+        buyDTire = false;
+        GM.isDTires = false;
+        SODT.SetActive(false);
+
+        buyFTire = false;
+        GM.isFTires = false;
+        SOFT.SetActive(false);
+
+        buyCTire = false;
+        GM.isCTires = false;
+        SOCT.SetActive(false);
+
+        GM.player.SetSpeed = 6;
+        SO6E.SetActive(false);
+
+        SO8E.SetActive(false);
+
+        GM.player.SetTurnSpeed = 1f;
+        SOH.SetActive(false);
+    }
 }
