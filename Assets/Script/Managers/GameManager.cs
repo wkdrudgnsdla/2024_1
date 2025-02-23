@@ -294,7 +294,7 @@ public class GameManager : MonoBehaviour
 
             //---------------------Àû-------------------
             Stage3Enemy.transform.position = new Vector3(1781.7f, -743.26f, -4109.2f);
-            Stage3Enemy.transform.rotation = Quaternion.Euler(0, 211.12f, 0);
+            Stage3Enemy.transform.rotation = Quaternion.Euler(0, -163.8f, 0);
         }
     }
 

@@ -12079,19 +12079,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 5e651372243dea742a800f0d36286a93, type: 3}
       propertyPath: m_LocalRotation.w
-      value: -0.2682473
+      value: 0.1409013
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 5e651372243dea742a800f0d36286a93, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 5e651372243dea742a800f0d36286a93, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.9633502
+      value: -0.9900237
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 5e651372243dea742a800f0d36286a93, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 5e651372243dea742a800f0d36286a93, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -12099,7 +12099,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 5e651372243dea742a800f0d36286a93, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: -163.8
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 5e651372243dea742a800f0d36286a93, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -22845,12 +22845,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 852059805}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.49}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 800.3546, y: 1477.0841, z: 2145.32}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1951697460}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!199 &852059807
 ParticleSystemRenderer:
@@ -23557,11 +23557,11 @@ ParticleSystem:
   ShapeModule:
     serializedVersion: 6
     enabled: 1
-    type: 4
+    type: 10
     angle: 0
     length: 5
     boxThickness: {x: 0, y: 0, z: 0}
-    radiusThickness: 0.9
+    radiusThickness: 0
     donutRadius: 0.2
     m_Position: {x: 0, y: 0, z: 0}
     m_Rotation: {x: 0, y: 0, z: 0}
@@ -23644,7 +23644,7 @@ ParticleSystem:
     sphericalDirectionAmount: 0
     randomPositionAmount: 0
     radius:
-      value: 4
+      value: 5
       mode: 0
       spread: 0
       speed:
@@ -50764,8 +50764,7 @@ Transform:
   m_LocalPosition: {x: 800.3546, y: 1477.0841, z: 2142.4011}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 852059806}
+  m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1957670911
@@ -56752,6 +56751,8 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 963194228}
+  - {fileID: 852059806}
+  - {fileID: 1951697460}
   - {fileID: 705507995}
   - {fileID: 614902078}
   - {fileID: 1037381252}
@@ -56780,4 +56781,3 @@ SceneRoots:
   - {fileID: 1828374500}
   - {fileID: 1279679934}
   - {fileID: 978274502}
-  - {fileID: 1951697460}

@@ -96,8 +96,9 @@ public class PlayerMove : MonoBehaviour
 
             currentSpeed = rb.velocity.magnitude;
 
+            // 현재 속도에 따라 radiusThickness를 0에서 0.5까지 선형 보간 적용
             var shape = Speed.shape;
-            shape.radiusThickness = Mathf.Lerp(0f, 0.9f, Mathf.Clamp01(currentSpeed / 100f));
+            shape.radiusThickness = Mathf.Lerp(0f, 0.5f, Mathf.Clamp01(currentSpeed / 100f));
         }
     }
 
