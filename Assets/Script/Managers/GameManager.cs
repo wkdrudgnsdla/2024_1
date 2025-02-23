@@ -139,6 +139,8 @@ public class GameManager : MonoBehaviour
 
     public void Update()
     {
+        //UnityEngine. Debug.Log(MTC.layerIndex);
+
         if(_Stage1Items == null)
         {
             _Stage1Items = GameObject.Find("Stage1Items");
@@ -177,6 +179,10 @@ public class GameManager : MonoBehaviour
             StartCoroutine(Stage2Item());
         }
 
+        if (_Stage3Items == null)
+        {
+            StartCoroutine(Stage3Item());
+        }
 
         if (StageLevel != 1)
         {
@@ -214,6 +220,8 @@ public class GameManager : MonoBehaviour
         player.rb.velocity = Vector3.zero;
         player.rb.angularVelocity = Vector3.zero;
         player.rb.interpolation = RigidbodyInterpolation.None;
+
+        player.currentSpeed = 0;
 
         StageScore = 0;
         TimerScore = 0;
@@ -304,6 +312,8 @@ public class GameManager : MonoBehaviour
         sec = 0;
         MCount = 0;
         SCount = 0;
+
+        player.currentSpeed = 0;
 
         BeforRoundScore = Resultscore;
         startRace = false;
@@ -418,6 +428,13 @@ public class GameManager : MonoBehaviour
             if(PDC.isOnPaintDetail)
             {
                 OutTrack = true;
+            }
+            else if(MTC.terrainUnderneath.gameObject.CompareTag("City"))
+            {
+                if (MTC.layerIndex == 1)
+                {
+                    OutTrack = true;
+                }
             }
             else if (MTC.layerIndex == 1 || MTC.layerIndex == 3 || MTC.layerIndex == 5 || MTC.layerIndex == 0)
             {

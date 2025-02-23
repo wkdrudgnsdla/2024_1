@@ -6,6 +6,8 @@ using UnityEngine;
 public class PlayerMove : MonoBehaviour
 {
     GameManager GM;
+    public GameObject BoomEffect;
+    public ParticleSystem Speed;
 
     public float SetSpeed;
     public float SetTurnSpeed;
@@ -22,6 +24,8 @@ public class PlayerMove : MonoBehaviour
 
     void Awake()
     {
+        BoomEffect = Resources.Load("BoomEffect") as GameObject;
+        Speed = GameObject.Find("Speed").GetComponent<ParticleSystem>();
         rb = GetComponent<Rigidbody>();
         rb.useGravity = true;
         rb.drag = 0.1f;
@@ -38,19 +42,19 @@ public class PlayerMove : MonoBehaviour
 
     private void Update()
     {
-        if(Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.D))
+        if (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.D))
         {
             turnSpeed = 0;
         }
-        else if(Input.GetKey(KeyCode.RightArrow) && Input.GetKey(KeyCode.LeftArrow))
+        else if (Input.GetKey(KeyCode.RightArrow) && Input.GetKey(KeyCode.LeftArrow))
         {
             turnSpeed = 0;
         }
-        else if(Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.RightArrow))
+        else if (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.RightArrow))
         {
             turnSpeed = 0;
         }
-        else if(Input.GetKey(KeyCode.D) && Input.GetKey(KeyCode.LeftArrow))
+        else if (Input.GetKey(KeyCode.D) && Input.GetKey(KeyCode.LeftArrow))
         {
             turnSpeed = 0;
         }
@@ -91,6 +95,31 @@ public class PlayerMove : MonoBehaviour
             rb.AddForce(Vector3.down * extraGravity, ForceMode.Acceleration);
 
             currentSpeed = rb.velocity.magnitude;
+
+            var shape = Speed.shape;
+            shape.radiusThickness = Mathf.Lerp(0f, 0.9f, Mathf.Clamp01(currentSpeed / 100f));
         }
+    }
+
+    private void OnTriggerEnter(Collider collision)
+    {
+        if (collision.gameObject.CompareTag("CrashEnemy"))
+        {
+            if (collision.gameObject.TryGetComponent<CrashEnemy>(out CrashEnemy enemy))
+            {
+                Vector3 pos = enemy.transform.position;
+                StartCoroutine(BoomEF(pos));
+            }
+        }
+    }
+
+    IEnumerator BoomEF(Vector3 pos)
+    {
+        Debug.Log("CloneBoom");
+        GameObject BEF = MonoBehaviour.Instantiate(BoomEffect);
+        BEF.name = "BoomEffect";
+        BEF.transform.position = pos;
+        yield return new WaitForSeconds(0.2f);
+        Destroy(BEF);
     }
 }

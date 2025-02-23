@@ -36,15 +36,15 @@ public class FinishLineStage3 : MonoBehaviour
             {
                 GM.GameAllClear = true;
                 GM.StageScore += 70000;
-                if (GM.MCount == 1 && GM.SCount <= 10)
+                if (GM.MCount <= 2 && GM.SCount <= 0)
                 {
                     GM.TimerScore += 70000;
                 }
-                else if (GM.MCount == 1 && GM.SCount <= 40 && GM.SCount > 10)
+                else if (GM.MCount == 2 && GM.SCount <= 30 && GM.SCount > 0)
                 {
                     GM.TimerScore += 50000;
                 }
-                else if (GM.MCount == 2 && GM.SCount <= 30 && GM.SCount > 40)
+                else if (GM.MCount == 2 && GM.SCount <= 59 && GM.SCount > 30)
                 {
                     GM.TimerScore += 30000;
                 }

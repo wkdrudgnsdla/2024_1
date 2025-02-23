@@ -61,6 +61,7 @@ public class ButtonManager : MonoBehaviour
 
     public void OnClickStartButton()
     {
+        GM._StageLevel = 1;
         GM.BeforRoundScore = 0;
         MainMenu.SetActive(false);
         GM.StartGame();

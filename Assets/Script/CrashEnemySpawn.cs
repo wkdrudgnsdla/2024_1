@@ -35,7 +35,6 @@ public class CrashEnemySpawn : MonoBehaviour
 
             if (activeEnemies.Count < 10)
             {
-                Debug.Log(randomX);
                 Vector3 spawnPos = new Vector3(transform.position.x + randomX, transform.position.y, transform.position.z);
                 GameObject enemy = Instantiate(CrashEnemy, spawnPos, transform.rotation);
                 activeEnemies.Add(enemy);

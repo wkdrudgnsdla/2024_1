@@ -47,7 +47,15 @@ public class UIManager : MonoBehaviour
             CountText.text = " ";
         }
 
-        if (Input.GetKeyUp(KeyCode.F3))
+        if(Input.GetKeyUp(KeyCode.F1))
+        {
+            StartCoroutine(F1());
+        }
+        else if (Input.GetKeyUp(KeyCode.F2))
+        {
+            StartCoroutine(F2());
+        }
+        else if (Input.GetKeyUp(KeyCode.F3))
         {
             StartCoroutine(F3());
         }
@@ -62,6 +70,18 @@ public class UIManager : MonoBehaviour
 
         int speed = (int)player.currentSpeed * 3;
         SpeedText.text = speed.ToString();
+    }
+    IEnumerator F1()
+    {
+        Cheat.text = "F1: 아이템 선택";
+        yield return new WaitForSeconds(1.2f);
+        Cheat.text = " ";
+    }
+    IEnumerator F2()
+    {
+        Cheat.text = "F2: 부품 가격 무료";
+        yield return new WaitForSeconds(1.2f);
+        Cheat.text = " ";
     }
 
     IEnumerator F3()

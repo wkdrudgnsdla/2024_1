@@ -6,6 +6,7 @@ public class CrashEnemy : MonoBehaviour
 {
     public float moveSpeed = 25f;
 
+
     public void Update()
     {
         transform.Translate(Vector2.right * moveSpeed * Time.deltaTime);
@@ -15,7 +16,13 @@ public class CrashEnemy : MonoBehaviour
     {
         if(collision.gameObject.CompareTag("Player"))
         {
-            Destroy(gameObject);
+            StartCoroutine(Destroy());
         }
+    }
+
+    IEnumerator Destroy()
+    {
+        yield return new WaitForSeconds(0.1f);
+        Destroy(gameObject);
     }
 }

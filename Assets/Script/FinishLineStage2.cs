@@ -40,11 +40,11 @@ public class FinishLineStage2 : MonoBehaviour
                 {
                     GM.TimerScore += 70000;
                 }
-                else if (GM.MCount == 1 && GM.SCount <= 40 && GM.SCount > 10)
+                else if (GM.MCount == 1 && GM.SCount <= 60 && GM.SCount > 10)
                 {
                     GM.TimerScore += 50000;
                 }
-                else if (GM.MCount == 2 && GM.SCount <= 30 && GM.SCount > 40)
+                else if (GM.MCount == 2 && GM.SCount <= 30 && GM.SCount > 0)
                 {
                     GM.TimerScore += 30000;
                 }
