@@ -27,6 +27,11 @@ public class UIManager : MonoBehaviour
         player = GameObject.Find("Player").GetComponent<PlayerMove>();
     }
 
+    public void Start()
+    {
+        Cheat.text = " ";
+    }
+
     public void Update()
     {
         time.text = GM.MCount.ToString("00") + ":" + GM.SCount.ToString("00");

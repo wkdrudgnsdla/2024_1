@@ -130,20 +130,11 @@ public class CheatManager : MonoBehaviour
     {
         if (Input.GetKeyUp(KeyCode.F5))
         {
-            if (!pused)
-            {
-                Time.timeScale = 0;
-                pused = true;
-            }
-        }
-        if (pused)
-        {
-            if (Input.GetKeyUp(KeyCode.F5))
-            {
-                Time.timeScale = 1;
-            }
+            pused = !pused;
+            Time.timeScale = pused ? 0 : 1;
         }
     }
+
 
     private void Item1()
     {
