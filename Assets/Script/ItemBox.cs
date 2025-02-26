@@ -11,6 +11,8 @@ public class ItemBox : MonoBehaviour
     public PlayerMove player;
     public GameManager GM;
     public Camera PCam;
+    public AudioSource Bost;
+    public AudioSource ItemSound;
 
     public GameObject Upgrade;
 
@@ -32,6 +34,8 @@ public class ItemBox : MonoBehaviour
 
     private void Awake()
     {
+        ItemSound = GameObject.Find("ItemSound").GetComponent<AudioSource>();
+        Bost = GameObject.Find("Bost").GetComponent<AudioSource>();
         Upgrade = GameObject.Find("Upgrade");
         IUM = GameObject.Find("GameManager").GetComponent<ItemUIManager>();
         player = GameObject.Find("Player").GetComponent<PlayerMove>();
@@ -103,6 +107,7 @@ public class ItemBox : MonoBehaviour
 
     private void Item1()
     {
+        ItemSound.Play();
         IUM.itemnum = 1;
         GM.cash += 1000000;
         Debug.Log("100¸¸¿ø");
@@ -110,6 +115,8 @@ public class ItemBox : MonoBehaviour
 
     private void Item2()
     {
+        ItemSound.Play();
+
         IUM.itemnum = 2;
 
         GM.cash += 5000000;
@@ -119,6 +126,8 @@ public class ItemBox : MonoBehaviour
 
     private void Item3()
     {
+        ItemSound.Play();
+
         IUM.itemnum = 3;
 
         GM.cash += 10000000;
@@ -127,6 +136,9 @@ public class ItemBox : MonoBehaviour
 
     private void Item4()
     {
+        ItemSound.Play();
+
+        Bost.Play();
         IUM.itemnum = 4;
         player.rb.AddForce(player.transform.right * 1000 * Time.deltaTime, ForceMode.Impulse);
         PCam.fieldOfView = 75f;
@@ -135,6 +147,9 @@ public class ItemBox : MonoBehaviour
 
     private void Item5()
     {
+        ItemSound.Play();
+
+        Bost.Play();
         IUM.itemnum = 5;
         player.rb.AddForce(player.transform.right * 2000* Time.deltaTime, ForceMode.Impulse);
         PCam.fieldOfView = 80f;
@@ -143,6 +158,8 @@ public class ItemBox : MonoBehaviour
 
     private void Item6()
     {
+        ItemSound.Play();
+
         PCam.transform.position = new Vector3(-214.2403f, -131.58f, 247.84f);
         PCam.transform.rotation = Quaternion.Euler(15, 0, 0);
         GM.cam.followSpeed = 0;

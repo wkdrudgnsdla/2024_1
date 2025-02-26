@@ -30,6 +30,8 @@ public class FinishLineStage1 : MonoBehaviour
             Destroy(GM._Stage2Items);
             Destroy(GM._Stage1Items);
 
+            GM.lose = false;
+
             GM.Finish = true;
             GM.startRace = false;
             if (!Up)

@@ -8,6 +8,7 @@ public class PlayerMove : MonoBehaviour
     GameManager GM;
     public GameObject BoomEffect;
     public ParticleSystem Speed;
+    public AudioSource Hit;
 
     public float SetSpeed;
     public float SetTurnSpeed;
@@ -24,6 +25,8 @@ public class PlayerMove : MonoBehaviour
 
     void Awake()
     {
+        Hit = GameObject.Find("Hit").GetComponent<AudioSource>();
+
         BoomEffect = Resources.Load("BoomEffect") as GameObject;
         Speed = GameObject.Find("Speed").GetComponent<ParticleSystem>();
         rb = GetComponent<Rigidbody>();
@@ -106,6 +109,16 @@ public class PlayerMove : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("CrashEnemy"))
         {
+            Hit.Play();
+            if (collision.gameObject.TryGetComponent<CrashEnemy>(out CrashEnemy enemy))
+            {
+                Vector3 pos = enemy.transform.position;
+                StartCoroutine(BoomEF(pos));
+            }
+        }
+        else if (collision.gameObject.CompareTag("Enemy"))
+        {
+            Hit.Play();
             if (collision.gameObject.TryGetComponent<CrashEnemy>(out CrashEnemy enemy))
             {
                 Vector3 pos = enemy.transform.position;

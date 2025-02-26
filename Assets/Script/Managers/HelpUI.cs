@@ -7,6 +7,7 @@ public class HelpUI : MonoBehaviour
 {
     public Text HelpText;
     public Text HelpTitle;
+    AudioSource ButtonSound;
 
     public Button NextPageButton;
     public Button BeforePageButton;
@@ -34,6 +35,8 @@ public class HelpUI : MonoBehaviour
 
     public void Awake()
     {
+        ButtonSound = GameObject.Find("ButtonSound").GetComponent<AudioSource>();
+
         //HelpText = GameObject.Find("HelpText").GetComponent<Text>();
         NextPageButton = GameObject.Find("NextPageButton").GetComponent<Button>();
         BeforePageButton = GameObject.Find("BeforePageButton").GetComponent <Button>();
@@ -72,17 +75,23 @@ public class HelpUI : MonoBehaviour
 
     public void OnClickNextPageButton()
     {
+        ButtonSound.Play();
+
         _pagenum += 1;
     }
 
     public void OnClickBeforePageButton()
     {
+        ButtonSound.Play();
+
         _pagenum -= 1;
     }
 
 
     public void OnClickBackButton()
     {
+        ButtonSound.Play();
+
         _pagenum = 1;
         Help.SetActive(false);
     }

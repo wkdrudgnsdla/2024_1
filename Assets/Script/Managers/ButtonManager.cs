@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class ButtonManager : MonoBehaviour
 {
     Scene scene;
+    AudioSource ButtonSound;
 
     public GameManager GM;
 
@@ -23,6 +24,7 @@ public class ButtonManager : MonoBehaviour
 
     public void Awake()
     {
+        ButtonSound = GameObject.Find("ButtonSound").GetComponent<AudioSource>();
         GM = GameObject.Find("GameManager").GetComponent<GameManager>();
 
         MenuObejct = GameObject.Find("MenuObejct");
@@ -60,6 +62,7 @@ public class ButtonManager : MonoBehaviour
 
     public void OnClickStartButton()
     {
+        ButtonSound.Play();
         GM._StageLevel = 1;
         GM.BeforRoundScore = 0;
         MainMenu.SetActive(false);
@@ -69,16 +72,22 @@ public class ButtonManager : MonoBehaviour
 
     public void OnClickRankingButton()
     {
+        ButtonSound.Play();
+
         Ranking.SetActive(true);
     }
 
     public void OnClickHelpButton()
     {
+        ButtonSound.Play();
+
         Help.SetActive(true);
     } 
 
     public void OnClickQuitButton()
     {
+        ButtonSound.Play();
+
         Application.Quit();
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -9,6 +10,8 @@ public class CheatManager : MonoBehaviour
     GameManager GM;
     ItemUIManager IUM;
     UpgradeManager UM;
+    AudioSource Bost;
+    public AudioSource CheatSound;
 
     public GameObject CheatItem;
     public GameObject Upgrade;
@@ -18,6 +21,8 @@ public class CheatManager : MonoBehaviour
 
     public void Awake()
     {
+        Bost = GameObject.Find("Bost").GetComponent<AudioSource>();
+        CheatSound = GameObject.Find("CheatSound").GetComponent<AudioSource>();
         GM = GetComponent<GameManager>();
         CheatItem = GameObject.Find("CheatItem");
         Upgrade = GameObject.Find("Upgrade");
@@ -45,6 +50,7 @@ public class CheatManager : MonoBehaviour
     {
         if(Input.GetKeyUp(KeyCode.F1))
         {
+            CheatSound.Play();
             CheatItem.SetActive(true);
             OnCheatItem = true;
         }
@@ -94,7 +100,9 @@ public class CheatManager : MonoBehaviour
     {
         if(Input.GetKeyUp(KeyCode.F2))
         {
-            if(UM.Upgrade.active == true)
+            CheatSound.Play();
+
+            if (UM.Upgrade.active == true)
             {
                 UM.ZeroCost();
             }
@@ -109,6 +117,8 @@ public class CheatManager : MonoBehaviour
     {
         if (Input.GetKeyUp(KeyCode.F3))
         {
+            CheatSound.Play();
+
             Destroy(GM._Stage1Items);
             Destroy(GM._Stage2Items);
             Destroy(GM._Stage3Items);
@@ -120,6 +130,8 @@ public class CheatManager : MonoBehaviour
     {
         if(Input.GetKeyUp(KeyCode.F4))
         {
+            CheatSound.Play();
+
             GM._StageLevel += 1;
             GM.NextGame();
         }
@@ -130,6 +142,8 @@ public class CheatManager : MonoBehaviour
     {
         if (Input.GetKeyUp(KeyCode.F5))
         {
+            CheatSound.Play();
+
             pused = !pused;
             Time.timeScale = pused ? 0 : 1;
         }
@@ -162,6 +176,7 @@ public class CheatManager : MonoBehaviour
 
     private void Item4()
     {
+        Bost.Play();
         IUM.itemnum = 4;
         GM.player.rb.AddForce(GM.player.transform.right * 1000 * Time.deltaTime, ForceMode.Impulse);
         GM.PCam.fieldOfView = 75f;
@@ -170,6 +185,7 @@ public class CheatManager : MonoBehaviour
 
     private void Item5()
     {
+        Bost.Play();
         IUM.itemnum = 5;
         GM.player.rb.AddForce(GM.player.transform.right * 2000 * Time.deltaTime, ForceMode.Impulse);
         GM.PCam.fieldOfView = 80f;

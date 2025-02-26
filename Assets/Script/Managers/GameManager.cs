@@ -16,6 +16,15 @@ public class GameManager : MonoBehaviour
     public GameObject Stage2Enemy;
     public GameObject Stage3Enemy;
 
+    public AudioSource MainMenuBGM;
+
+    public AudioSource Stage1BGM;
+    public AudioSource Stage2BGM;
+    public AudioSource Stage3BGM;
+
+    public AudioSource CountDown;
+    public AudioSource StartSound;
+
     MultiTerrainChecker MTC;
     PaintDetailChecker PDC;
     public GameObject MainMenu;
@@ -31,6 +40,7 @@ public class GameManager : MonoBehaviour
 
     public float sec { get;set;}
     public float StartCountdown;
+    public int lastCountdownSecond = -1;
 
     public int SCount;
     public int MCount;
@@ -49,9 +59,21 @@ public class GameManager : MonoBehaviour
             {
                 StageLevel = value;
             }
+
+            if(StageLevel < 1)
+            {
+                StageLevel = 1;
+            }
+
+            if(StageLevel > 3)
+            {
+                StageLevel = 3;
+            }
         }
 
     }
+
+    public bool PlayingMainMenu;
 
     public bool startRace;
     public bool OutTrack;
@@ -81,6 +103,11 @@ public class GameManager : MonoBehaviour
 
     public bool GameAllClear;//이거 3번째 엔드포인트에서 활성화
 
+
+    public bool isST1BGM;
+    public bool isST2BGM;
+    public bool isST3BGM;
+
     public double StageScore;
     public double TimerScore;
     public double Resultscore;
@@ -88,6 +115,16 @@ public class GameManager : MonoBehaviour
 
     public void Awake()
     {
+        MainMenuBGM = GameObject.Find("MainMenuBGM").GetComponent<AudioSource>();
+
+        CountDown = GameObject.Find("CountDown").GetComponent<AudioSource>();
+        StartSound = GameObject.Find("StartSound").GetComponent<AudioSource>();
+
+        Stage1BGM = GameObject.Find("Stage1BGM").GetComponent<AudioSource>();
+        Stage2BGM = GameObject.Find("Stage2BGM ").GetComponent<AudioSource>();
+        Stage3BGM = GameObject.Find("Stage3BGM").GetComponent<AudioSource>();
+
+
         Stage1Enemy = GameObject.Find("Stage1Enemy");
         Stage2Enemy = GameObject.Find("Stage2Enemy");
         Stage3Enemy = GameObject.Find("Stage3Enemy");
@@ -113,7 +150,7 @@ public class GameManager : MonoBehaviour
     public void Start()
     {
         GameAllClear = false;
-        StartCountdown = 4;
+        StartCountdown = 4.2f;
         OutTrack = false;
         Finish = false;
         inStage = false;
@@ -135,13 +172,35 @@ public class GameManager : MonoBehaviour
         BeforRoundScore = 0;
         Money = 0;
         StageLevel = 1;
+
+        PlayingMainMenu = false;
+        isST1BGM = false;
+        isST2BGM = false;
+        isST3BGM = false;
     }
 
     public void Update()
     {
+        int countdownSecond = Mathf.CeilToInt(StartCountdown);
+
+        if (countdownSecond != lastCountdownSecond)
+        {
+            if (countdownSecond == 4 || countdownSecond == 3 || countdownSecond == 2 && inStage)
+            {
+                CountDown.Play();
+            }
+            else if (countdownSecond == 1)
+            {
+                StartSound.Play();
+            }
+
+            // 마지막 초 값을 현재 초 값으로 업데이트합니다.
+            lastCountdownSecond = countdownSecond;
+        }
+
         //UnityEngine. Debug.Log(MTC.layerIndex);
 
-        if(_Stage1Items == null)
+        if (_Stage1Items == null)
         {
             _Stage1Items = GameObject.Find("Stage1Items");
         }
@@ -187,28 +246,58 @@ public class GameManager : MonoBehaviour
         if (StageLevel != 1)
         {
             Stage1Enemy.SetActive(false);
+            Stage1BGM.Stop();
         }
         else if(StageLevel == 1)
         {
             Stage1Enemy.SetActive(true);
+            if(!isST1BGM)
+            {
+                if(!isMainMenu)
+                {
+                    Stage1BGM.Play();
+                    isST1BGM = true;
+                }
+            }
         }
 
         if(StageLevel != 2)
         {
             Stage2Enemy.SetActive(false);
+            Stage2BGM.Stop();
         }
         else if(StageLevel == 2)
         {
             Stage2Enemy.SetActive(true);
+            if (!isST2BGM)
+            {
+                if (!isMainMenu)
+                {
+                    Stage2BGM.Play();
+                    isST2BGM = true;
+                }
+
+            }
         }
 
         if(StageLevel != 3)
         {
             Stage3Enemy.SetActive(false);
+            Stage3BGM.Stop();
+            isST3BGM = false;
         }
         else if(StageLevel == 3)
         {
             Stage3Enemy.SetActive(true);
+            if(!isST3BGM)
+            {
+                if (!isMainMenu)
+                {
+                    Stage3BGM.Play();
+                    isST3BGM = true;
+                }
+
+            }
         }
     }
 
@@ -234,7 +323,7 @@ public class GameManager : MonoBehaviour
 
         UpScore = false;
         startRace = false;
-        StartCountdown = 4;
+        StartCountdown = 4.2f;
         OutTrack = false;
         Finish = false;
         STBost = false;
@@ -317,7 +406,7 @@ public class GameManager : MonoBehaviour
 
         BeforRoundScore = Resultscore;
         startRace = false;
-        StartCountdown = 4;
+        StartCountdown = 4.2f;
         OutTrack = false;
         Finish = false;
         STBost = false;
@@ -394,7 +483,7 @@ public class GameManager : MonoBehaviour
         else
         {
             player.moveSpeed = player.SetSpeed;
-            PCam.fieldOfView = Mathf.Lerp(PCam.fieldOfView, 60f, Time.deltaTime);
+            PCam.fieldOfView = Mathf.Lerp(PCam.fieldOfView, 70f, Time.deltaTime);
         }
     }
 
@@ -402,6 +491,8 @@ public class GameManager : MonoBehaviour
     {
         if (!isMainMenu)
         {
+            MainMenuBGM.Stop();
+            PlayingMainMenu = false;
             inStage = true;
             StartCountdown -= Time.deltaTime;
 
@@ -429,21 +520,35 @@ public class GameManager : MonoBehaviour
             {
                 OutTrack = true;
             }
-            else if(MTC.terrainUnderneath.gameObject.CompareTag("City"))
+            else
+            {
+                OutTrack= false;
+            }
+
+            if(MTC.terrainUnderneath.gameObject.CompareTag("City"))
             {
                 if (MTC.layerIndex == 1)
                 {
                     OutTrack = true;
                 }
+                else
+                {
+                    OutTrack = false;
+                }
             }
-            else if (MTC.layerIndex == 1 || MTC.layerIndex == 3 || MTC.layerIndex == 5 || MTC.layerIndex == 0)
+
+            if(MTC.terrainUnderneath.gameObject.CompareTag("Desert"))
             {
-                OutTrack = false;
+                if (MTC.layerIndex == 1 || MTC.layerIndex == 3 || MTC.layerIndex == 5 || MTC.layerIndex == 0)
+                {
+                    OutTrack = false;
+                }
+                else
+                {
+                    OutTrack = true;
+                }
             }
-            else
-            {
-                OutTrack = true;
-            }
+            
 
             if (startRace && !Upgrading)
             {
@@ -473,10 +578,15 @@ public class GameManager : MonoBehaviour
         }
         else if (isMainMenu)
         {
+            if(!PlayingMainMenu)
+            {
+                MainMenuBGM.Play();
+            }
             inStage = false;
-            StartCountdown = 4;
+            StartCountdown = 4.2f;
             OutTrack = false;
             Finish = false;
+            PlayingMainMenu = true;
         }
     }
 
